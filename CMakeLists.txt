@@ -6,14 +6,17 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
-SET(ZeroMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/libzmq/include)
-SET(CppZMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/cppzmq)
+SET(ZeroMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/libzmq/include CACHE INTERNAL "ZeroMq Include Dir")
+SET(CppZMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/cppzmq CACHE INTERNAL "CppZMQ Include Dir")
+SET(CommunicationHandler_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/include CACHE INTERNAL "CommunicationHanlder Include Dir")
 
 ADD_SUBDIRECTORY(Dependencies)
 
 include_directories(
 			${ZeroMQ_INCLUDE_DIR}
 			${CppZMQ_INCLUDE_DIR}
+			${CommunicationHandler_INCLUDE_DIR}
+
 			)
 add_library(Networking SHARED
 		Source/zmqsocket.cpp
