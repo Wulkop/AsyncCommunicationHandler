@@ -10,19 +10,22 @@ SET(ZeroMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/libzmq/include C
 SET(CppZMQ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/cppzmq CACHE INTERNAL "CppZMQ Include Dir")
 SET(CommunicationHandler_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/include CACHE INTERNAL "CommunicationHanlder Include Dir")
 
-ADD_SUBDIRECTORY(Dependencies)
+if(NOT TARGET Networking)
+	message(${CppZMQ_INCLUDE_DIR})
+	ADD_SUBDIRECTORY(Dependencies)
 
-include_directories(
-			${ZeroMQ_INCLUDE_DIR}
-			${CppZMQ_INCLUDE_DIR}
-			${CommunicationHandler_INCLUDE_DIR}
+	include_directories(
+				${ZeroMQ_INCLUDE_DIR}
+				${CppZMQ_INCLUDE_DIR}
+				${CommunicationHandler_INCLUDE_DIR}
 
-			)
-add_library(Networking SHARED
-		Source/zmqsocket.cpp
-		Source/ipccommunicationhandler.cpp
-		)
-target_link_libraries (Networking 
-		${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libzmq.so
-		)
-add_dependencies(Networking libzmq)
+				)
+        add_library(Networking SHARED
+                        Source/zmqsocket.cpp
+                        Source/ipccommunicationhandler.cpp
+                        )
+        target_link_libraries (Networking 
+                        ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libzmq.so
+                        )
+        add_dependencies(Networking libzmq)
+endif()
