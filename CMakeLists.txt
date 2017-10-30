@@ -34,4 +34,9 @@ if(NOT TARGET Networking)
 	endif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 		include_directories("${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/pthreads/include")
 	endif(WIN32)
+	if(UNIX)
+	target_link_libraries(Networking
+		pthread
+		)
+	endif(UNIX)
 endif()
