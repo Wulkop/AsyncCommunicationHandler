@@ -13,18 +13,20 @@ SET(CommunicationHandler_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/include)
 if(NOT TARGET Networking)
 	ADD_SUBDIRECTORY(Dependencies)
 
-	include_directories(
-				${ZeroMQ_INCLUDE_DIR}
-				${CppZMQ_INCLUDE_DIR}
-				${CommunicationHandler_INCLUDE_DIR}
-				)
-    add_library(Networking STATIC
+    	add_library(Networking STATIC
                     Source/zmqsocket.cpp
                     Source/ipccommunicationhandler.cpp
                     )
 	target_link_libraries(Networking 
 					${PTHREAD_LIBRARY}
 					libzmq)
+	target_include_directories(Networking
+		                       PUBLIC
+		                       ${ZeroMQ_INCLUDE_DIR}
+		                       ${CppZMQ_INCLUDE_DIR}
+		                       ${CommunicationHandler_INCLUDE_DIR}
+		                       )
+
     add_dependencies(Networking libzmq)
 	if(WIN32)
 	if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
