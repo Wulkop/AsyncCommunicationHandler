@@ -34,7 +34,7 @@ public:
 	/**
 	 * Set socket options for client usage.
 	 */
-	void setSocketClient();
+	void setSocketClient(std::string ip);
 	/**
 	 * Send a message
 	 */

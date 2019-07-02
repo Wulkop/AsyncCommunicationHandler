@@ -17,9 +17,9 @@ if(NOT TARGET Networking)
                     Source/zmqsocket.cpp
                     Source/ipccommunicationhandler.cpp
                     )
-	target_link_libraries(Networking 
+	target_link_libraries(Networking
 					${PTHREAD_LIBRARY}
-					libzmq)
+					libzmq-static)
 	target_include_directories(Networking
 		                       PUBLIC
 		                       ${ZeroMQ_INCLUDE_DIR}
@@ -27,7 +27,7 @@ if(NOT TARGET Networking)
 		                       ${CommunicationHandler_INCLUDE_DIR}
 		                       )
 
-    add_dependencies(Networking libzmq)
+    #add_dependencies(Networking libzmq)
 	if(WIN32)
 	if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 		find_library(PTHREAD_LIBRARY pthread HINTS "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/pthreads/lib/x64")

@@ -31,11 +31,11 @@ void IpcCommunicationHandler::setSocketServer()
 	subSocket->open("tcp://*:55555", ZMQ_SUB);
 	subSocket->setSocketOptions(ZMQ_SUBSCRIBE,"",0);
 }
-void IpcCommunicationHandler::setSocketClient()
+void IpcCommunicationHandler::setSocketClient(std::string ip)
 {
-	pubSocket->connect("tcp://127.0.0.1:55555", ZMQ_PUB);
+	pubSocket->connect(("tcp://"+ ip + ":55555").c_str(), ZMQ_PUB);
 
-	subSocket->connect("tcp://127.0.0.1:55556", ZMQ_SUB);
+	subSocket->connect(("tcp://" + ip + ":55556").c_str(), ZMQ_SUB);
 	subSocket->setSocketOptions(ZMQ_SUBSCRIBE,"",0);
 }
 void IpcCommunicationHandler::start()
