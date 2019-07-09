@@ -37,10 +37,11 @@ void ZmqSocket::send(const char * str, int size)
 std::string ZmqSocket::receive()
 {
 	zmq::message_t mesg;
-	char buffer[MAX_MASSAGE_SIZE];
-	int actualSize=m_pSocket->recv(buffer,MAX_MASSAGE_SIZE,0);
-	std::string buf=std::string(buffer,actualSize);
-	return buf;
+
+	m_pSocket->recv(&mesg, 0);
+	std::string rpl = std::string(static_cast<char*>(mesg.data()), mesg.size());
+	
+	return rpl;
 }
 void ZmqSocket::setSocketOptions(int val, const void * optval, size_t optvallen)
 {

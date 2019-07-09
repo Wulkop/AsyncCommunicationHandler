@@ -66,10 +66,11 @@ void * IpcCommunicationHandler::receive(void * structPtr)
 	{
 		if(handler->subSocket->initialized)
 		{
+			zmq::message_t message;
 			std::string buffer;
-			std::cout<<"Ready to receive"<<std::endl;
+			//std::cout<<"Ready to receive"<<std::endl;
 			buffer = handler->subSocket->receive();
-			std::cout<<"Got: "<<buffer<<std::endl;
+			//std::cout<<"Got: "<<buffer<<std::endl;
 			fifoClass->pushFifo(buffer);
 		}
 		else
