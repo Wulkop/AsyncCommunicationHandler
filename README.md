@@ -3,11 +3,11 @@ This repository provides a simple static library which allows an application to 
 
 ## What is this library and why do I need it?
 
-This library can be used inside an application where multiple parts (processes or even threads) should communicate with each other.
+This library can be used in an application where multiple parts (processes or even threads) should communicate with each other.
 I've noticed that there are many applications where we have a central component which receives messages from other components and answers via a broadcast.
-I try to make setting up these kind of network architecture easier with this libarary.
+I try to make setting up these kind of network architecture easier with this library.
 
-# How can I build this libarary
+# How can I build this library
 The easiest way to build this library is using CMake (at least version 3.1.0).
 1. Check if you cloned this repository with all dependencies `git submodule update --init --recursive`
 2. Create a build folder `mkdir build`
@@ -28,7 +28,7 @@ In your inherited class you just need to implement the method `checkFifo`.
 You can either implement this as an empty method or you can use it to process the incoming messages.
 Since the class is thread-safe it doesn't matter in which thread this method is called.
 
-After you've instatiated an object of this class you can pass is as an argument to the CommunicationHandler constructor.
+After you've instaniated an object of this class you can pass is as an argument to the CommunicationHandler constructor.
 Before you call the method `start` you need to specify if this handler should act as a host or a client.
 You can do this via the methods `setSocketClient` or `setSocketServer`.
 The moment you call `start` a new thread will be created and waits for incoming messages.
