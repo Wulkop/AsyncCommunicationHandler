@@ -1,4 +1,4 @@
-/*
+/*			//std::cout<<"Got: "<<buffer<<std::endl;
  * zmqsocket.cpp
  *
  *  Created on: 06.05.2017
@@ -14,7 +14,9 @@ ZmqSocket::ZmqSocket() {
 
 }
 ZmqSocket::~ZmqSocket() {
-	// TODO Auto-generated destructor stub
+    delete m_pSocket;
+	delete m_pContext;
+
 }
 void ZmqSocket::open(const char * ports, int flag)
 {

@@ -7,7 +7,6 @@
 
 #ifndef SOURCE_INCLUDE_ZMQSOCKET_H_
 #define SOURCE_INCLUDE_ZMQSOCKET_H_
-#define MAX_MASSAGE_SIZE 20
 #include <zmq.hpp>
 
 

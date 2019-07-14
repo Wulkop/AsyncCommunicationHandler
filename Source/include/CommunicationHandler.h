@@ -1,18 +1,14 @@
 /*
- * ipccommunicationhandler.h
  *
  *  Created on: 06.05.2017
  *      Author: jan
  */
+#pragma once
 
-#ifndef SOURCE_INCLUDE_IPCCOMMUNICATIONHANDLER_H_
-#define SOURCE_INCLUDE_IPCCOMMUNICATIONHANDLER_H_
-
-#include <pthread.h>
+#include <thread>
+#include <mutex>
 #include "zmqsocket.h"
 #include "abstractfifoclass.h"
-
-class XWindowManager;
 
 struct ThreadArgs
 {
@@ -56,13 +52,14 @@ private:
 	 * Threadsafe getter method to check if a thread stop is requested
 	 */
 	bool isStopIssued();
-	AbstractFifoClass * fifoClass;
-	pthread_mutex_t stopMutex;
-	ZmqSocket * subSocket;
-	ZmqSocket * pubSocket;
-	pthread_t thread;
-	bool stopIssued;
-	ThreadArgs * args;
+	AbstractFifoClass * m_FifoClass;
+
+	ZmqSocket * m_SubSocket;
+	ZmqSocket * m_PubSocket;
+
+    std::mutex m_StopMutex;
+	std::thread m_Thread;
+	bool m_StopIssued;
+	ThreadArgs * m_ThreadArgs;
 };
 
-#endif /* SOURCE_INCLUDE_IPCCOMMUNICATIONHANDLER_H_ */
