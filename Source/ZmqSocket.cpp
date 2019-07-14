@@ -5,7 +5,7 @@
  *      Author: jan
  */
 
-#include "include/zmqsocket.h"
+#include "ZmqSocket.h"
 
 ZmqSocket::ZmqSocket() {
 	m_pSocket = NULL;

@@ -7,7 +7,7 @@
 
 #include "CommunicationHandler.h"
 
-IpcCommunicationHandler::IpcCommunicationHandler(AbstractFifoClass * fifoClass): m_SubSocket(new ZmqSocket), m_PubSocket(new ZmqSocket),
+CommunicationHandler::CommunicationHandler(AbstractFifoClass * fifoClass): m_SubSocket(new ZmqSocket), m_PubSocket(new ZmqSocket),
 m_StopIssued(false), m_FifoClass(fifoClass), m_StopMutex(), m_ThreadArgs(new ThreadArgs)
 {
 
@@ -15,7 +15,7 @@ m_StopIssued(false), m_FifoClass(fifoClass), m_StopMutex(), m_ThreadArgs(new Thr
     m_ThreadArgs->fifoClassPtr = fifoClass;
 }
 
-IpcCommunicationHandler::~IpcCommunicationHandler() {
+CommunicationHandler::~CommunicationHandler() {
     stop();
     delete m_SubSocket;
 	delete m_PubSocket;
@@ -23,31 +23,31 @@ IpcCommunicationHandler::~IpcCommunicationHandler() {
 
 	//pthread_cancel(thread);
 }
-void IpcCommunicationHandler::setSocketServer()
+void CommunicationHandler::setSocketServer()
 {
 	m_PubSocket->open("tcp://*:55556", ZMQ_PUB);
 
 	m_SubSocket->open("tcp://*:55555", ZMQ_SUB);
 	m_SubSocket->setSocketOptions(ZMQ_SUBSCRIBE,"",0);
 }
-void IpcCommunicationHandler::setSocketClient(std::string ip)
+void CommunicationHandler::setSocketClient(std::string ip)
 {
 	m_PubSocket->connect(("tcp://"+ ip + ":55555").c_str(), ZMQ_PUB);
 
 	m_SubSocket->connect(("tcp://" + ip + ":55556").c_str(), ZMQ_SUB);
 	m_SubSocket->setSocketOptions(ZMQ_SUBSCRIBE,"",0);
 }
-void IpcCommunicationHandler::start()
+void CommunicationHandler::start()
 {
     m_Thread = std::thread(receive, m_ThreadArgs);
 }
-void IpcCommunicationHandler::stop()
+void CommunicationHandler::stop()
 {
     m_StopMutex.lock();
 	m_StopIssued = true;
 	m_StopMutex.unlock();
 }
-bool IpcCommunicationHandler::isStopIssued()
+bool CommunicationHandler::isStopIssued()
 {
 	bool result = false;
 	m_StopMutex.lock();
@@ -56,10 +56,10 @@ bool IpcCommunicationHandler::isStopIssued()
 	return result;
 
 }
-void * IpcCommunicationHandler::receive(void * structPtr)
+void * CommunicationHandler::receive(void * structPtr)
 {
 	ThreadArgs * args = (ThreadArgs *) structPtr;
-	IpcCommunicationHandler * handler = (IpcCommunicationHandler *) args->thisPtr;
+	CommunicationHandler * handler = (CommunicationHandler *) args->thisPtr;
 	AbstractFifoClass * fifoClass = (AbstractFifoClass *) args->fifoClassPtr;
 	while(!handler->isStopIssued())
 	{
@@ -77,7 +77,7 @@ void * IpcCommunicationHandler::receive(void * structPtr)
 	}
 	return NULL;
 }
-void IpcCommunicationHandler::send(std::string message)
+void CommunicationHandler::send(std::string message)
 {
 	if(m_PubSocket->initialized)
 	{

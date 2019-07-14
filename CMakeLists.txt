@@ -15,7 +15,7 @@ if(NOT TARGET CommunicationHandler)
 	ADD_SUBDIRECTORY(Dependencies)
 
     	add_library(Networking STATIC
-				Source/zmqsocket.cpp
+				Source/ZmqSocket.cpp
 				Source/CommunicationHandler.cpp
                     )
 	target_link_libraries(Networking

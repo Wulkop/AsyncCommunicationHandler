@@ -7,8 +7,8 @@
 
 #include <thread>
 #include <mutex>
-#include "zmqsocket.h"
-#include "abstractfifoclass.h"
+#include "ZmqSocket.h"
+#include "AbstractFifoClass.h"
 
 struct ThreadArgs
 {
@@ -16,13 +16,13 @@ struct ThreadArgs
 	void * fifoClassPtr;
 };
 
-class IpcCommunicationHandler {
+class CommunicationHandler {
 public:
 	/**
 	 * Constrcutor for IpcHandler. Takes a pointer to an object of AbstractFifoClass. This object will be used to store the received messages in a queue.
 	 */
-	IpcCommunicationHandler(AbstractFifoClass * fifoClass);
-	virtual ~IpcCommunicationHandler();
+	CommunicationHandler(AbstractFifoClass * fifoClass);
+	virtual ~CommunicationHandler();
 	/**
 	 * Set socket options for server usage.
 	 */
